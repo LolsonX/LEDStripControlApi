@@ -6,7 +6,6 @@ class Effect(db.Model, Serializer):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), unique=True, nullable=False)
     time_period = db.Column(db.Integer, nullable=True)
-    colors = db.relationship("Color", secondary=effect_colors)
 
     def serialize(self):
         d = Serializer.serialize(self)
