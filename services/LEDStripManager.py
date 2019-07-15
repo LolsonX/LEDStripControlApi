@@ -28,8 +28,10 @@ class LEDStripManager(object):
     def apply_effect(self, effect_name):
         self.effect = effect_name
 
-    def apply_config(self):
-        pass
+    def apply_config(self, config):
+        self.num_pixels = config.num_pixels
+        self.gpio = config.gpio
+        eval("self.pixels = neopixel.NeoPixel(board.D{})".format(self.gpio))
 
     def run(self):
         if self.effect == "Fill":
@@ -47,3 +49,10 @@ class LEDStripManager(object):
         if blue > 255 or blue < 0:
             return False
         return True
+
+    def fill_with_current_color(self):
+        self.pixels.fill(self.red, self.green, self.blue)
+        self.activate()
+
+    def activate(self):
+        self.pixels.show()
