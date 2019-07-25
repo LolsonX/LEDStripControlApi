@@ -21,5 +21,4 @@ class ScriptThread(Thread):
     def run_script(self):
         while True:
             while self.running:
-                print("I am running")
                 time.sleep(1)
