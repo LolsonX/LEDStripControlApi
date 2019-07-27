@@ -1,11 +1,12 @@
+# TODO Create model for colors which will store list of colors and do all operations on it
+
 import json
 
 from flask import jsonify
-from templates.Errors import ModelError
+from templates.Errors import ModelError, NotFoundError
 
 
 class ColorController(object):
-
     @staticmethod
     def index():
         colors = ColorController.load_colors_list()
@@ -16,7 +17,7 @@ class ColorController(object):
         color = ColorController.find_color(color_name)
         if color is not None:
             return jsonify(color)
-        return None
+        raise NotFoundError("Color")
 
     @staticmethod
     def post(color_name, red=-1, green=-1, blue=-1):
@@ -28,8 +29,12 @@ class ColorController(object):
         return jsonify(color)
 
     @staticmethod
-    def update():
-        pass
+    def update(color_name, red, green, blue):
+        ColorController.validate_color(color_name, red, green, blue)
+        colors = ColorController.load_colors_list()
+        color = {"name": color_name, "red": red, "green": green, "blue": blue}
+        colors["colors"].append(color)
+        ColorController.save_changes(colors)
 
     @staticmethod
     def delete(color_name):
@@ -39,10 +44,10 @@ class ColorController(object):
                 colors["colors"].remove(color)
                 ColorController.save_changes(colors)
                 return jsonify(color)
-        return None
+        raise NotFoundError("Color")
 
     @staticmethod
-    def load_colors_list():
+    def load_colors_list() -> dict:
         with open('resources/colors.json') as color_db:
             colors = json.loads(color_db.read())
 
@@ -59,7 +64,7 @@ class ColorController(object):
             json.dump(colors, color_db)
 
     @staticmethod
-    def validate_color(name: str, red: int, green: int, blue: int):
+    def validate_color(name: str, red: int, green: int, blue: int) -> bool:
         color = ColorController.find_color(name)
         errors = []
         if color is not None:
