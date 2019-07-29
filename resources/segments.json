@@ -1,8 +1,1 @@
-{"segments": [
-  {
-    "start_pixel": 0,
-    "end_pixel": 60,
-    "color": "Maroon",
-    "effect": "fill"
-  }
-]}
+{"segments": [{"start_pixel": 0, "end_pixel": 60, "color": "Maroon", "effect": "fill"}, {"start_pixel": 20, "end_pixel": 60, "color": "Brown", "effect": "Fill"}]}

@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, abort, request
 from werkzeug.exceptions import HTTPException
 from controllers.ColorController import ColorController
+from controllers.SegmentsController import SegmentController
 from templates.Errors import ModelError, NotFoundError
 
 router = Blueprint('routes', __name__)
@@ -42,6 +43,23 @@ def create_color(color_name, red, green, blue):
     return color
 
 
+@router.route('/segments', methods=["GET", "POST"])
+def segments():
+    if request.method == "GET":
+        return index_segments()
+    if request.method == "POST":
+        params = request.get_json()
+        return create_segment(params["start_pixel"], params["end_pixel"], params["color"], params["effect"])
+
+
+def index_segments():
+    return SegmentController.index()
+
+
+def create_segment(start_pixel, end_pixel, color, effect):
+    return SegmentController.post(start_pixel, end_pixel, color, effect)
+
+
 @router.errorhandler(ModelError)
 def invalid_model(error):
     return render_error(error)
@@ -55,3 +73,4 @@ def invalid_model(error):
 def render_error(error: HTTPException):
     response = jsonify(error.description)
     response.status_code = error.code
+    return response
