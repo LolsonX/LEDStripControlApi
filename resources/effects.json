@@ -1,0 +1,15 @@
+{"effects": [
+  {
+    "name": "Fill",
+    "startFromLeft": true,
+    "secsBeforeNextPixel": 0,
+    "randomizeSegmentColor": false,
+    "randomizePixelColor": false,
+    "newColorOnFinish": false,
+    "randomColorPool":[],
+    "blinking": false,
+    "blinkingColor": null,
+    "insertOtherColors": true,
+    "colorsToInsert": []
+  }
+]}
