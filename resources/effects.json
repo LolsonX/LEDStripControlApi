@@ -8,7 +8,7 @@
     "newColorOnFinish": false,
     "randomColorPool":[],
     "blinking": false,
-    "blinkingColor": null,
+    "blinkingColors": [],
     "insertOtherColors": true,
     "colorsToInsert": []
   }
